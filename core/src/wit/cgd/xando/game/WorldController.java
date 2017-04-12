@@ -32,6 +32,7 @@ public class WorldController extends InputAdapter{
 	public float viewportWidth;
 	public int width,height;
 	float					timeLeftGameOverDelay;
+	float					timeLeftHintDisplay;
 	
 	public Board board;
 	public boolean                     	dragging = false;
@@ -40,13 +41,10 @@ public class WorldController extends InputAdapter{
     public TextureRegion				hintButton;
     public TextureRegion				undoButton;
     
+    public String						hint;	
+    
     final float                 TIME_LEFT_GAME_OVER_DELAY = 10f;
-	
-    int wins = 0;
-    int draws = 0;
-    int loses = 0;
-    int games = 0;
-   // boolean nextMove = true;
+    final float					TIME_LEFT_HINT_DISPLAY = 3f;
     
 	public WorldController(Game game){
 		this.game = game;
@@ -85,17 +83,12 @@ public class WorldController extends InputAdapter{
 	public void update(float deltaTime) {
         if (board.gameState == Board.GameState.PLAYING ) {
             board.move();
-           // nextMove = false;
+            if(timeLeftHintDisplay > 0) timeLeftHintDisplay -= deltaTime;
         } else if(board.gameState != Board.GameState.PLAYING ){
             timeLeftGameOverDelay -= deltaTime;
             if (timeLeftGameOverDelay < 0) {
-            	games++;
-            	if(board.gameState == Board.GameState.ODD_WON) wins++;
-            	else if(board.gameState == Board.GameState.EVEN_WON) loses++;
-            	else draws++;
             	timeLeftGameOverDelay = TIME_LEFT_GAME_OVER_DELAY;
-            	if(games < 100) board.start();
-            	else System.out.println("WINS : "+wins+"  LOSES: "+loses+"  DRAWS: "+draws);
+            	board.start();
             }
         }
     }
@@ -120,6 +113,7 @@ public class WorldController extends InputAdapter{
 	         
 	       //check if undo button is pressed
 	         if(col == 2 && row == 4){
+	        	 if(timeLeftHintDisplay > 0) return true;
 	        	 undoButton = Assets.instance.undoBtn.down;
 	        	 undoMove();
 	        	 return true;
@@ -196,7 +190,11 @@ public class WorldController extends InputAdapter{
 	}
 	
 	private void showHint(){
-		
+		MinimaxPlayer hintPlayer = new MinimaxPlayer(board,board.currentPlayer.mySymbols);
+		hintPlayer.skill = 4;
+		int hintMove = hintPlayer.move();
+		hint = String.format("Put %d in position %d on the board", hintPlayer.value, hintMove);
+		timeLeftHintDisplay = TIME_LEFT_HINT_DISPLAY;
 	}
 	
 	private void undoMove() {
