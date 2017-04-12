@@ -16,11 +16,9 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
 
 import wit.cgd.xando.game.util.AudioManager;
 import wit.cgd.xando.game.util.Constants;
-import wit.cgd.xando.game.util.GameStats;
 
 public class Board {
 	public static final String TAG = Board.class.getName();
@@ -32,18 +30,10 @@ public class Board {
 	public GameState		gameState;
 	
 	public TextureRegion	board;
-	public TextureRegion	x;
-	public TextureRegion	o;
 	
 	public final int		EMPTY	= 0;
 	public final int		EVEN	= 2;
 	public final int		ODD		= 1;
-	
-	public final TextureRegion[] NUMS	= {Assets.instance.one.region,
-				Assets.instance.two.region, Assets.instance.three.region,
-				Assets.instance.four.region, Assets.instance.five.region,
-				Assets.instance.six.region, Assets.instance.seven.region,
-				Assets.instance.eight.region, Assets.instance.nine.region};
 	
 	public int[][]			cells	= new int [3][3];
 	public ArrayList<Integer> numsOnBoard;
@@ -56,8 +46,6 @@ public class Board {
 	
 	private void init(){
 		board = Assets.instance.board.region;
-		x = Assets.instance.x.region;
-		o = Assets.instance.o.region;
 		start();
 	}
 	
@@ -72,7 +60,7 @@ public class Board {
 		for (int row = 0; row < 3; row++)
 			for (int col = 0; col < 3; col++) {
 				if (cells[row][col] == EMPTY) continue;
-				region = NUMS[cells[row][col]-1];
+				region = Assets.instance.numbers.get(cells[row][col]-1).region;//NUMS[cells[row][col]-1];
 				batch.draw(region.getTexture(), col*1.4f-1.9f,
 						row*1.4f-2.3f, 0, 0, 1, 1, 1, 1, 0,
 						region.getRegionX(), region.getRegionY(),
@@ -87,7 +75,7 @@ public class Board {
         for(int i = 0; i < 9; i+= 2){
         	rowPos ++;
         	if(numsOnBoard.contains(i+1)) continue;
-        	region =  NUMS[i];
+        	region =  Assets.instance.numbers.get(i).region;
             batch.draw(region.getTexture(), (-1) * 1.4f - 1.9f, rowPos - 1.5f, 0, 0, 1, 1, 1, 1, 0,
                     region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight(),
                     false, false);
@@ -97,7 +85,7 @@ public class Board {
         for(int i = 1; i < 9; i+= 2){
         	rowPos ++;
         	if(numsOnBoard.contains(i+1)) continue;
-        	region =  NUMS[i];
+        	region =  Assets.instance.numbers.get(i).region;
             batch.draw(region.getTexture(), (3) * 1.4f - 1.9f, rowPos - 1.5f, 0, 0, 1, 1, 1, 1, 0,
                     region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight(),
                     false, false);

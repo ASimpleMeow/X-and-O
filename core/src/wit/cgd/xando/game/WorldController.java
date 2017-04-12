@@ -114,53 +114,23 @@ public class WorldController extends InputAdapter{
 
 	            // check if valid start of a drag for first player
 	            if (col == -1 && board.currentPlayer==board.firstPlayer) {
-	                switch(row){
-	                case 0:
-	                	dragging = true;
-		                dragRegion = board.NUMS[0];
-		                return true;
-	                case 1:
-	                	dragging = true;
-		                dragRegion = board.NUMS[2];
-		                return true;
-	                case 2:
-	                	dragging = true;
-		                dragRegion = board.NUMS[4];
-		                return true;
-	                case 3:
-	                	dragging = true;
-		                dragRegion = board.NUMS[6];
-		                return true;
-	                case 4:
-	                	dragging = true;
-		                dragRegion = board.NUMS[8];
-		                return true;
-		            default:
-		            	break;
-	                }
+	            	for(int r=0; r<5; ++r){
+	            		if(row == r){
+	            			dragging = true;
+			                dragRegion = Assets.instance.numbers.get(r*2).region;
+			                return true;
+	            		}
+	            	}
 	            }
 	            // check if valid start of a drag for second player
 	            if (col == 3 && board.currentPlayer==board.secondPlayer) {
-	            	switch(row){
-	                case 0:
-	                	dragging = true;
-		                dragRegion = board.NUMS[1];
-		                return true;
-	                case 1:
-	                	dragging = true;
-		                dragRegion = board.NUMS[3];
-		                return true;
-	                case 2:
-	                	dragging = true;
-		                dragRegion = board.NUMS[5];
-		                return true;
-	                case 3:
-	                	dragging = true;
-		                dragRegion = board.NUMS[7];
-		                return true;
-		            default:
-		            	break;
-	                }
+	            	for(int r=0; r<4; ++r){
+	            		if(row == r){
+	            			dragging = true;
+			                dragRegion = Assets.instance.numbers.get((r*2)+1).region;
+			                return true;
+	            		}
+	            	}
 	            }
 
 	        }
@@ -186,7 +156,7 @@ public class WorldController extends InputAdapter{
 
         int value = -1;
         for(int i = 0; i < 9; ++i){
-        	if(dragRegion.equals(board.NUMS[i])){
+        	if(dragRegion.equals(Assets.instance.numbers.get(i).region)){
         		value = i+1;
         		break;
         	}

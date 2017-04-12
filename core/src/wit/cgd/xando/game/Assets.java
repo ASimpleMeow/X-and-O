@@ -19,6 +19,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
 import wit.cgd.xando.game.util.Constants;
@@ -35,17 +36,7 @@ public class Assets implements Disposable, AssetErrorListener {
 	public AssetFonts fonts;
 
 	public Asset				board;
-	public Asset 				x;
-	public Asset 				o;
-	public Asset 				one;
-	public Asset 				two;
-	public Asset 				three;
-	public Asset 				four;
-	public Asset 				five;
-	public Asset 				six;
-	public Asset 				seven;
-	public Asset 				eight;
-	public Asset 				nine;
+	public Array<Asset>			numbers;
 	public AssetSounds          sounds;
 	public AssetMusic           music;
 
@@ -126,20 +117,19 @@ public class Assets implements Disposable, AssetErrorListener {
 			t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		fonts = new AssetFonts();
-
+		numbers = new Array<Asset>();
+		
 		// build game resource objects
 		board = new Asset(atlas, "board");
-		x = new Asset(atlas, "x");		
-		o = new Asset(atlas, "o");
-		one = new Asset(atlas,"1");
-		two = new Asset(atlas,"2");
-		three = new Asset(atlas,"3");
-		four = new Asset(atlas,"4");
-		five = new Asset(atlas,"5");
-		six = new Asset(atlas,"6");
-		seven = new Asset(atlas,"7");
-		eight = new Asset(atlas,"8");
-		nine = new Asset(atlas,"9");
+		numbers.add(new Asset(atlas,"1"));
+		numbers.add(new Asset(atlas,"2"));
+		numbers.add(new Asset(atlas,"3"));
+		numbers.add(new Asset(atlas,"4"));
+		numbers.add(new Asset(atlas,"5"));
+		numbers.add(new Asset(atlas,"6"));
+		numbers.add(new Asset(atlas,"7"));
+		numbers.add(new Asset(atlas,"8"));
+		numbers.add(new Asset(atlas,"9"));
 		
 		// load sounds
 		assetManager.load("sounds/first.wav", Sound.class);
