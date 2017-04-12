@@ -34,9 +34,11 @@ public class WorldController extends InputAdapter{
 	float					timeLeftGameOverDelay;
 	
 	public Board board;
-	public boolean                     dragging = false;
-    public int                         dragX, dragY;
-    public TextureRegion               dragRegion;
+	public boolean                     	dragging = false;
+    public int                         	dragX, dragY;
+    public TextureRegion               	dragRegion;
+    public TextureRegion				hintButton;
+    public TextureRegion				undoButton;
     
     final float                 TIME_LEFT_GAME_OVER_DELAY = 10f;
 	
@@ -60,6 +62,9 @@ public class WorldController extends InputAdapter{
 		Gdx.input.setInputProcessor(this);
 		Gdx.input.setInputProcessor(this);
         board = new Board();
+        hintButton = Assets.instance.hintBtn.up;
+        undoButton = Assets.instance.undoBtn.up;
+        
         if(GamePreferences.instance.firstPlayerHuman){
         	board.firstPlayer = new HumanPlayer(board, board.ODD);
         }else{
@@ -73,12 +78,6 @@ public class WorldController extends InputAdapter{
         	board.secondPlayer = new MinimaxPlayer(board, board.EVEN);
         	board.secondPlayer.skill = (int) GamePreferences.instance.secondPlayerSkill;
         }
-        /*
-        board.firstPlayer = (GamePreferences.instance.firstPlayerHuman)?new HumanPlayer(board, board.ODD):
-        	new MinimaxPlayer(board, board.ODD);
-        board.secondPlayer = (GamePreferences.instance.secondPlayerHuman)? new HumanPlayer(board,board.EVEN):
-        	new MinimaxPlayer(board, board.EVEN);
-		*/
         timeLeftGameOverDelay = TIME_LEFT_GAME_OVER_DELAY;
         board.start();
     }
@@ -104,37 +103,51 @@ public class WorldController extends InputAdapter{
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		 if (board.gameState == Board.GameState.PLAYING && board.currentPlayer.human) {
+			 
+			 // convert to cell position
+	         int row = 5 * (height - screenY) / height;
+	         int col = (int) (viewportWidth * (screenX - 0.5 * width) / width) + 1;
+	         
+	         dragX = screenX;
+	         dragY = screenY;
+	         
+	         //check if hint button is pressed
+	         if(col == 0 && row == 4){
+	        	 hintButton = Assets.instance.hintBtn.down;
+	        	 showHint();
+	        	 return true;
+	         }
+	         
+	       //check if undo button is pressed
+	         if(col == 2 && row == 4){
+	        	 undoButton = Assets.instance.undoBtn.down;
+	        	 undoMove();
+	        	 return true;
+	         }
+	         
 
-	            // convert to cell position
-	            int row = 5 * (height - screenY) / height;
-	            int col = (int) (viewportWidth * (screenX - 0.5 * width) / width) + 1;
-
-	            dragX = screenX;
-	            dragY = screenY;
-
-	            // check if valid start of a drag for first player
-	            if (col == -1 && board.currentPlayer==board.firstPlayer) {
-	            	for(int r=0; r<5; ++r){
-	            		if(row == r){
-	            			dragging = true;
-			                dragRegion = Assets.instance.numbers.get(r*2).region;
-			                return true;
-	            		}
+	         // check if valid start of a drag for first player
+	         if (col == -1 && board.currentPlayer==board.firstPlayer) {
+	            for(int r=0; r<5; ++r){
+	            	if(row == r){
+	            		dragging = true;
+			            dragRegion = Assets.instance.numbers.get(r*2).region;
+			            return true;
 	            	}
 	            }
-	            // check if valid start of a drag for second player
-	            if (col == 3 && board.currentPlayer==board.secondPlayer) {
-	            	for(int r=0; r<4; ++r){
-	            		if(row == r){
-	            			dragging = true;
-			                dragRegion = Assets.instance.numbers.get((r*2)+1).region;
-			                return true;
-	            		}
+	         }
+	         // check if valid start of a drag for second player
+	         if (col == 3 && board.currentPlayer==board.secondPlayer) {
+	           for(int r=0; r<4; ++r){
+	            	if(row == r){
+	            		dragging = true;
+			            dragRegion = Assets.instance.numbers.get((r*2)+1).region;
+			            return true;
 	            	}
 	            }
-
-	        }
-	        return true;
+	         }
+		 }
+	     return true;
 	}
 	
 	@Override
@@ -146,7 +159,9 @@ public class WorldController extends InputAdapter{
 	
 	@Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-
+		hintButton = Assets.instance.hintBtn.up;
+		undoButton = Assets.instance.undoBtn.up;
+		
         dragging = false;
         if(dragRegion == null) return true;
         
@@ -178,5 +193,27 @@ public class WorldController extends InputAdapter{
 			backToMenu();
 		}
 		return false;
+	}
+	
+	private void showHint(){
+		
+	}
+	
+	private void undoMove() {
+		if(board.firstPlayer.human && board.secondPlayer.human && !board.movesMade.isEmpty()){
+			int pos = board.movesMade.pop();
+			board.cells[pos/3][pos%3] = board.EMPTY;
+			board.numsOnBoard.remove(board.numsOnBoard.size()-1);
+			board.currentPlayer = (board.currentPlayer == board.firstPlayer)?
+					board.secondPlayer : board.firstPlayer;
+			return;
+		}
+		
+		if(board.movesMade.size() < 2) return;
+		for(int i=0; i<2; ++i){
+			int pos = board.movesMade.pop();
+			board.cells[pos/3][pos%3] = board.EMPTY;
+			board.numsOnBoard.remove(board.numsOnBoard.size()-1);
+		}
 	}
 }

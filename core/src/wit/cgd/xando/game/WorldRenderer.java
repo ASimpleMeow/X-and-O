@@ -76,7 +76,20 @@ public class WorldRenderer implements Disposable {
                     worldController.dragRegion.getRegionWidth(), worldController.dragRegion.getRegionHeight(),
                     false, false);
         }
-
+        
+        //Hint and Undo buttons render
+        float btnX = (worldController.viewportWidth/ worldController.width)-2f;
+        float btnY = (4.0f * (worldController.height) / worldController.height-2.25f);
+        batch.draw(worldController.hintButton.getTexture(),
+        		btnX, btnY, 0, 0, 1, 1, 1.25f, 0.75f, 0,
+				worldController.hintButton.getRegionX(), worldController.hintButton.getRegionY(),
+				worldController.hintButton.getRegionWidth(), worldController.hintButton.getRegionHeight(), false, false);
+		
+        batch.draw(worldController.undoButton.getTexture(), 
+        		btnX+2.75f, btnY, 0, 0, 1, 1, 1.25f, 0.75f, 0,
+				worldController.undoButton.getRegionX(), worldController.undoButton.getRegionY(),
+				worldController.undoButton.getRegionWidth(), worldController.undoButton.getRegionHeight(), false, false);
+		
         batch.end();
 		
 		// GUI rendering
@@ -96,6 +109,7 @@ public class WorldRenderer implements Disposable {
 			fontGameOver.draw(batch, message, x, y, 0, Align.center, true);
 			fontGameOver.setColor(1, 1, 1, 1);
 		}
+		
 		batch.end();
 	}
 

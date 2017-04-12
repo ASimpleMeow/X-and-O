@@ -39,12 +39,24 @@ public class Assets implements Disposable, AssetErrorListener {
 	public Array<Asset>			numbers;
 	public AssetSounds          sounds;
 	public AssetMusic           music;
+	public AssetButton			hintBtn;
+	public AssetButton			undoBtn;
 
 	public class Asset {
 		public final AtlasRegion region;
 		
 		public Asset(TextureAtlas atlas, String imageName) {
 			region = atlas.findRegion(imageName);
+		}
+	}
+	
+	public class AssetButton {
+		public final AtlasRegion up;
+		public final AtlasRegion down;
+		
+		public AssetButton(TextureAtlas atlas, String upImage, String dnImage){
+			up = atlas.findRegion(upImage);
+			down = atlas.findRegion(dnImage);
 		}
 	}
 	
@@ -130,6 +142,9 @@ public class Assets implements Disposable, AssetErrorListener {
 		numbers.add(new Asset(atlas,"7"));
 		numbers.add(new Asset(atlas,"8"));
 		numbers.add(new Asset(atlas,"9"));
+		
+		hintBtn = new AssetButton(atlas,"hint-up","hint-dn");
+		undoBtn = new AssetButton(atlas,"undo-up","undo-dn");
 		
 		// load sounds
 		assetManager.load("sounds/first.wav", Sound.class);

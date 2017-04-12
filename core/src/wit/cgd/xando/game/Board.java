@@ -1,6 +1,7 @@
 package wit.cgd.xando.game;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * @file        Board
@@ -39,6 +40,7 @@ public class Board {
 	public ArrayList<Integer> numsOnBoard;
 	public BasePlayer 		firstPlayer, secondPlayer;
 	public BasePlayer 		currentPlayer;
+	public Stack<Integer>	movesMade;
 	
 	public Board(){
 		init();
@@ -46,6 +48,7 @@ public class Board {
 	
 	private void init(){
 		board = Assets.instance.board.region;
+		movesMade = new Stack<Integer>();
 		start();
 	}
 	
@@ -118,6 +121,7 @@ public class Board {
 		}
 		
 		cells[row][col] = value;//currentPlayer.mySymbol;
+		movesMade.add(row*3+col);
 		Gdx.app.debug(TAG, "Move has been made");
 		
 		numsOnBoard.add(value);
