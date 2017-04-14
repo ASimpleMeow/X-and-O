@@ -1,4 +1,12 @@
 package wit.cgd.xando.game.util;
+/**
+ * @file        GamePreferences
+ * @author      Oleksandr Kononov 20071032
+ * @assignment  XandO
+ * @brief       Holds game preference for options in the game
+ *
+ * @notes       
+ */
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;

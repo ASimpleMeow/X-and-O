@@ -1,4 +1,14 @@
 package wit.cgd.xando.game;
+/**
+ * @file        Board
+ * @author      Oleksandr Kononov 20071032
+ * @assignment  XandO
+ * @brief       Handles all matter related to the board including
+ * 				winning,losing and drawing conditions as well as 
+ * 				Players and pieces on the board
+ *
+ * @notes       
+ */
 
 import java.util.ArrayList;
 import java.util.Stack;

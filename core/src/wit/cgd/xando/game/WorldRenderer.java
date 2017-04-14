@@ -57,6 +57,7 @@ public class WorldRenderer implements Disposable {
 		cameraGUI.update();
      }
 
+	@SuppressWarnings("static-access")
 	public void render() {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();

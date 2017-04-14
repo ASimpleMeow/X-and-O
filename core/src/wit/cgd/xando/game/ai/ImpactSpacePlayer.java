@@ -1,4 +1,20 @@
 package wit.cgd.xando.game.ai;
+/**
+ * @file        ImpactSpacePlayer
+ * @author      Oleksandr Kononov 20071032
+ * @assignment  XandO
+ * @brief       This player takes into the account a number of things
+ * 				before making it's move:
+ * 				-If it can win with next turn, win
+ * 				-If the opponent is about to win, block him
+ * 				-If there is a corner taken attempt to place a
+ * 				 piece in the opposite corner such that the middle
+ * 				 spot required your symbols available number to win
+ * 				-else place your largest piece in a corner
+ * 				-else place a random piece somewhere
+ *
+ * @notes       
+ */
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,23 +99,6 @@ public class ImpactSpacePlayer extends BasePlayer {
 			pos = ThreadLocalRandom.current().nextInt(0, 9);
 			if(board.cells[pos/3][pos%3] == board.EMPTY) return pos;
 		}
-		
-		
-		/*
-		//Check center
-		if(board.cells[1][1] == board.EMPTY) return 4;
-		
-		//Check coners
-		if(board.cells[2][0] == board.EMPTY) return 6;
-		if(board.cells[2][2] == board.EMPTY) return 8;
-		if(board.cells[0][0] == board.EMPTY) return 0;
-		if(board.cells[0][2] == board.EMPTY) return 2;
-		
-		int pos = 0;
-		while(true){
-			pos = ThreadLocalRandom.current().nextInt(0, 9);
-			if(board.cells[pos/3][pos%3] == board.EMPTY) return pos;
-		}*/
 	}
 
 }

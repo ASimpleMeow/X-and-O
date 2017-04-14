@@ -1,14 +1,18 @@
 package wit.cgd.xando.game.ai;
+/**
+ * @file        MinimaxPlayer
+ * @author      Oleksandr Kononov 20071032
+ * @assignment  XandO
+ * @brief       Player that uses the Minimax algorithm to play
+ *
+ * @notes       
+ */
 
-import java.util.ArrayList;
 import java.util.Random;
-
-import com.badlogic.gdx.Gdx;
 
 import wit.cgd.xando.game.BasePlayer;
 import wit.cgd.xando.game.Board;
 import wit.cgd.xando.game.WorldRenderer;
-import wit.cgd.xando.game.util.GamePreferences;
 
 public class MinimaxPlayer extends BasePlayer{
 	
@@ -50,9 +54,6 @@ public class MinimaxPlayer extends BasePlayer{
                 	// skip over used positions
                     if (board.cells[r][c]!=board.EMPTY) continue;
 
-                    //String indent = new String(new char[depth]).replace("\0", "  ");
-                    //Gdx.app.log(indent, "search ("+r+","+c+")");
-
                     // place move 
                     board.cells[r][c] = n;
 
@@ -81,8 +82,6 @@ public class MinimaxPlayer extends BasePlayer{
                         maxPos = 3*r+c;
                         finalValue = n;
                     } 
-
-                    //Gdx.app.log(indent, "Score "+score);
 
                     // undo move 
                     board.cells[r][c] = board.EMPTY;

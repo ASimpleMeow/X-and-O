@@ -1,4 +1,13 @@
 package wit.cgd.xando.game.util;
+/**
+ * @file        GameStats
+ * @author      Oleksandr Kononov 20071032
+ * @assignment  XandO
+ * @brief       Game stats that are displayed on the menu screen
+ * 				are held here
+ *
+ * @notes       
+ */
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;

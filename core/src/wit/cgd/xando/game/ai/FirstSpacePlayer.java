@@ -9,7 +9,7 @@ import wit.cgd.xando.game.WorldRenderer;
  * @author      Oleksandr Kononov 20071032
  * @assignment  XandO
  * @brief       A simple AI player that is the opponent to the human player,
- * 				find the next available space
+ * 				find the next available space and next available number
  *
  * @notes       
  */

@@ -1,4 +1,12 @@
 package wit.cgd.xando.game.util;
+/**
+ * @file        AudioManager
+ * @author      Oleksandr Kononov 20071032
+ * @assignment  XandO
+ * @brief       Handles music and sounds in the game
+ *
+ * @notes       
+ */
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;

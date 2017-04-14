@@ -1,4 +1,12 @@
 package wit.cgd.xando.screens;
+/**
+ * @file        AbstractGameScreen
+ * @author      Oleksandr Kononov 20071032
+ * @assignment  XandO
+ * @brief       Super class for MenuScreen and GameScreen
+ *
+ * @notes       
+ */
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

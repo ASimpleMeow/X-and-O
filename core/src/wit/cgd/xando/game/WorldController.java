@@ -7,18 +7,14 @@ package wit.cgd.xando.game;
  * @brief       Handles player input and handles the update
  * 				for the board.
  *
- * @notes     	Known issue: If the screen is stretched too wide,
- * 							 user input becomes inaccurate  
+ * @notes     	
  */
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Game;
 import wit.cgd.xando.screens.MenuScreen;
-import wit.cgd.xando.game.ai.FirstSpacePlayer;
-import wit.cgd.xando.game.ai.ImpactSpacePlayer;
 import wit.cgd.xando.game.ai.MinimaxPlayer;
-import wit.cgd.xando.game.ai.RandomSpacePlayer;
 import wit.cgd.xando.game.util.GamePreferences;
 import wit.cgd.xando.game.util.GameStats;
 
@@ -26,6 +22,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class WorldController extends InputAdapter{
+	@SuppressWarnings("unused")
 	private static final String TAG = WorldController.class.getName();
 	
 	private Game 				game;
@@ -81,6 +78,7 @@ public class WorldController extends InputAdapter{
         board.start();
     }
 	
+	@SuppressWarnings("static-access")
 	public void update(float deltaTime) {
         if (board.gameState == Board.GameState.PLAYING ) {
             board.move();
@@ -95,6 +93,7 @@ public class WorldController extends InputAdapter{
             	}else{
             		GameStats.instance.draw();
             	}
+            	GameStats.instance.save();
             	backToMenu();
             }
         }
@@ -196,6 +195,11 @@ public class WorldController extends InputAdapter{
 		return false;
 	}
 	
+	/**
+	 * Displays a hint to the player by using a MinimaxPlayer to predict the
+	 * next best move.
+	 * Note: skill level of 4 is used to avoid slow downs while still being helpful
+	 */
 	private void showHint(){
 		MinimaxPlayer hintPlayer = new MinimaxPlayer(board,board.currentPlayer.mySymbols);
 		hintPlayer.skill = 4;
@@ -206,6 +210,10 @@ public class WorldController extends InputAdapter{
 		timeLeftHintDisplay = TIME_LEFT_HINT_DISPLAY;
 	}
 	
+	/**
+	 * Undo moves on the board
+	 * Note: Takes into account the number of human players
+	 */
 	private void undoMove() {
 		if(board.firstPlayer.human && board.secondPlayer.human && !board.movesMade.isEmpty()){
 			int pos = board.movesMade.pop();

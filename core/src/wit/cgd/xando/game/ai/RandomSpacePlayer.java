@@ -1,4 +1,13 @@
 package wit.cgd.xando.game.ai;
+/**
+ * @file        RandomSpacePlayer
+ * @author      Oleksandr Kononov 20071032
+ * @assignment  XandO
+ * @brief       Player that uses random available spaces and numbers
+ * 				to play
+ *
+ * @notes       
+ */
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;

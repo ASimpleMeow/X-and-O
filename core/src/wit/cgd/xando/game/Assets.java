@@ -27,7 +27,6 @@ import wit.cgd.xando.game.util.Constants;
 
 public class Assets implements Disposable, AssetErrorListener {
 
-	@SuppressWarnings("unused")
 	private static final String	TAG	= WorldRenderer.class.getName(); 
 
 	public static final Assets instance = new Assets();
@@ -165,7 +164,7 @@ public class Assets implements Disposable, AssetErrorListener {
 		assetManager.dispose(); 	
 	}
 	
-	@Override public void error(AssetDescriptor asset, Throwable throwable) {
+	@Override public void error(@SuppressWarnings("rawtypes") AssetDescriptor asset, Throwable throwable) {
         Gdx.app.error(TAG, "Couldn't load asset '" + asset + "'", (Exception) throwable);
 	}
 }

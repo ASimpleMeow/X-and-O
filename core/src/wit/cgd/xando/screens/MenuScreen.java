@@ -1,4 +1,14 @@
 package wit.cgd.xando.screens;
+/**
+ * @file        MenuScreen
+ * @author      Oleksandr Kononov 20071032
+ * @assignment  XandO
+ * @brief       Handles all the input and display for the menu screen
+ * 				of the game, here the options can set and game stats
+ * 				can be viewed.
+ *
+ * @notes       
+ */
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -10,12 +20,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
@@ -26,6 +34,7 @@ import wit.cgd.xando.game.util.GameStats;
 
 public class MenuScreen extends AbstractGameScreen{
 	
+	@SuppressWarnings("unused")
 	private static final String TAG = MenuScreen.class.getName();
 	
 	private Stage			stage;

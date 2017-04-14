@@ -1,15 +1,24 @@
 package wit.cgd.xando.screens;
+/**
+ * @file        GameScreen
+ * @author      Oleksandr Kononov 20071032
+ * @assignment  XandO
+ * @brief       Runs the worldController and worldRenderer for 
+ * 				the actual game
+ *
+ * @notes       
+ */
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
-import wit.cgd.xando.XandOMain;
 import wit.cgd.xando.game.WorldController;
 import wit.cgd.xando.game.WorldRenderer;
 
 public class GameScreen extends AbstractGameScreen{
 	
+	@SuppressWarnings("unused")
 	private static final String TAG = GameScreen.class.getName();
 	
 	private WorldController		worldController;
