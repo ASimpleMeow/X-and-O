@@ -20,6 +20,7 @@ import wit.cgd.xando.game.ai.ImpactSpacePlayer;
 import wit.cgd.xando.game.ai.MinimaxPlayer;
 import wit.cgd.xando.game.ai.RandomSpacePlayer;
 import wit.cgd.xando.game.util.GamePreferences;
+import wit.cgd.xando.game.util.GameStats;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -44,7 +45,7 @@ public class WorldController extends InputAdapter{
     public String						hint;	
     
     final float                 TIME_LEFT_GAME_OVER_DELAY = 10f;
-    final float					TIME_LEFT_HINT_DISPLAY = 3f;
+    final float					TIME_LEFT_HINT_DISPLAY = 5f;
     
 	public WorldController(Game game){
 		this.game = game;
@@ -87,8 +88,14 @@ public class WorldController extends InputAdapter{
         } else if(board.gameState != Board.GameState.PLAYING ){
             timeLeftGameOverDelay -= deltaTime;
             if (timeLeftGameOverDelay < 0) {
-            	timeLeftGameOverDelay = TIME_LEFT_GAME_OVER_DELAY;
-            	board.start();
+            	if (board.gameState== board.gameState.ODD_WON && board.currentPlayer.mySymbols == board.ODD) {
+            	    GameStats.instance.win();
+            	}else if (board.gameState== board.gameState.ODD_WON && board.currentPlayer.mySymbols != board.ODD){
+            		GameStats.instance.lose();
+            	}else{
+            		GameStats.instance.draw();
+            	}
+            	backToMenu();
             }
         }
     }
@@ -193,7 +200,9 @@ public class WorldController extends InputAdapter{
 		MinimaxPlayer hintPlayer = new MinimaxPlayer(board,board.currentPlayer.mySymbols);
 		hintPlayer.skill = 4;
 		int hintMove = hintPlayer.move();
-		hint = String.format("Put %d in position %d on the board", hintPlayer.value, hintMove);
+		int row = (int)Math.abs(2-((hintMove/3))+1);
+		int col = (hintMove%3)+1;
+		hint = String.format("Put %d in row %d, column %d", hintPlayer.value,row,col);
 		timeLeftHintDisplay = TIME_LEFT_HINT_DISPLAY;
 	}
 	

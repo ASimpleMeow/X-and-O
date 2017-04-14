@@ -63,7 +63,7 @@ public class Board {
 		for (int row = 0; row < 3; row++)
 			for (int col = 0; col < 3; col++) {
 				if (cells[row][col] == EMPTY) continue;
-				region = Assets.instance.numbers.get(cells[row][col]-1).region;//NUMS[cells[row][col]-1];
+				region = Assets.instance.numbers.get(cells[row][col]-1).region;
 				batch.draw(region.getTexture(), col*1.4f-1.9f,
 						row*1.4f-2.3f, 0, 0, 1, 1, 1, 1, 0,
 						region.getRegionX(), region.getRegionY(),

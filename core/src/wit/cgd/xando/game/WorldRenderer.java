@@ -109,7 +109,7 @@ public class WorldRenderer implements Disposable {
 			fontGameOver.draw(batch, message, x, y, 0, Align.center, true);
 			fontGameOver.setColor(1, 1, 1, 1);
 		}
-		if(worldController.timeLeftHintDisplay > 0){
+		if(worldController.board.gameState == Board.GameState.PLAYING && worldController.timeLeftHintDisplay > 0){
 			float x = cameraGUI.viewportWidth / 2;
 			float y = cameraGUI.viewportHeight / 2;
 			BitmapFont fontGameOver = Assets.instance.fonts.defaultBig;
